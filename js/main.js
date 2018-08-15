@@ -64,9 +64,8 @@ function initCameraUI() {
     // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_button_role
 
     takePhotoButton.addEventListener("click", function() {
-        alert("press");
         takeSnapshotUI();
-        takeSnapshot();        
+        takeSnapshot2();        
     });
 
     // -- fullscreen part
@@ -227,6 +226,22 @@ function takeSnapshot() {
     });
 
 }
+
+function takeSnapshot2() {
+    const img = document.querySelector('img');
+    // ...
+    console.log(navigator.mediaDevices.getSupportedConstraints());
+
+
+    window.stream.takePhoto()
+    .then(blob => {
+        img.src = URL.createObjectURL(blob);
+        img.onload = () => { URL.revokeObjectURL(this.src); }
+    })
+    .catch(error => console.error('takePhoto() error:', error));
+}
+
+
 
 // https://hackernoon.com/how-to-use-javascript-closures-with-confidence-85cd1f841a6b
 // closure; store this in a variable and call the variable as function
